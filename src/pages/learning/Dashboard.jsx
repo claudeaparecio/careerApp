@@ -1,34 +1,18 @@
 import React from 'react';
-import {
-  Card,
-  Typography,
-  Alert,
-  Icon,
-  Menu,
-  Spin,
-  Row,
-  Col,
-  Badge,
-  Drawer,
-  Form,
-  Button,
-  Input,
-  Select,
-  DatePicker,
-} from 'antd';
+import { Card, Typography, Icon, Row, Col, Drawer, Form, Button, Input, Divider } from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import { FormattedMessage } from 'umi-plugin-react/locale';
 import { connect } from 'dva';
+import Link from 'umi/link';
+import ToDoList from '../common-components/ToDoList';
+import GoalList from '../common-components/GoalList';
 
-var hour = new Date().getHours();
-var greeting = 'Good ' + ((hour < 12 && 'Morning') || (hour < 18 && 'Afternoon') || 'Evening');
+const { Text } = Typography;
+
+const hour = new Date().getHours();
+
+const greeting = `Good ${(hour < 12 && 'morning') || (hour < 18 && 'afternoon') || 'evening'}`;
 
 class Dashboard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { userAsync: [], loading: true };
-  }
-
   state = { visible: false };
 
   showDrawer = () => {
@@ -42,77 +26,87 @@ class Dashboard extends React.Component {
       visible: false,
     });
   };
-  /*   componentDidMount() {
-    this.getUserAsync();
-  } */
-
-  /*   async getUserAsync() {
-    const response = await fetch('api/currentuser');
-    const data = await response.json();
-    this.setState({ userAsync: data, loading: false });
-  } */
 
   render() {
-    const {
-      currentUser = {
-        avatar: '',
-        name: '',
+    const thingsToDo = [
+      {
+        title: 'Reminder',
+        content:
+          'Have you signed up for your training for your training yet yet for your training yet?',
       },
-      menu,
-    } = this.props;
+      {
+        title: '',
+        content: 'There are new job openings for your desired career track...',
+      },
+    ];
+
+    const goals = [
+      'Complete Splunk certification in 2020!',
+      'Sign up for virtual manager training.',
+      'Explore career paths in satelite networks.',
+    ];
+
     const { getFieldDecorator } = this.props.form;
+    const managementModules = [
+      {
+        path: '/program/dashboard',
+        title: 'Program Management Modules',
+      },
+      {
+        path: '/learning/dashboard',
+        title: 'Learning Management Modules',
+      },
+      {
+        path: '/resource/dashboard',
+        title: 'Resource Management Modules',
+      },
+    ];
     return (
       <PageHeaderWrapper>
         <Card>
-          <h1>{greeting}, Sidney</h1>
-
+          <Typography
+            style={{
+              fontWeight: 'initial',
+              fontSize: '30px',
+              letterSpacing: '0.1px',
+              textAlign: 'center',
+            }}
+          >
+            {greeting}, Sidney
+          </Typography>
+          <Divider
+            orientation="center"
+            style={{
+              marginTop: '30px',
+            }}
+            type="horizontal"
+          >
+            {managementModules.map(m => (
+              <Button
+                style={{
+                  marginLeft: '5px',
+                  marginRight: '5px',
+                  height: '50px',
+                }}
+              >
+                <Link to={m.path}>
+                  <Text
+                    style={{
+                      fontSize: '18px',
+                    }}
+                  >
+                    {m.title}
+                  </Text>
+                </Link>
+              </Button>
+            ))}
+          </Divider>
           <Row gutter={[8, 8]}>
             <Col xs={12} span={6}>
-              <Card title="Things to Do">
-                <Card
-                  hoverable
-                  type="inner"
-                  style={{
-                    backgroundColor: '#fff',
-                    color: 'black',
-                    boxShadow: '0 0 0 1px #d9d9d9 inset',
-                    border: '2px solid #592c82',
-                    borderLeft: '5px solid #592c82',
-                    fontWeight: 'bold',
-                  }}
-                >
-                  10 New Employees are interested in Juniper training
-                </Card>
-                <Card
-                  hoverable
-                  type="inner"
-                  style={{
-                    backgroundColor: '#fff',
-                    color: 'black',
-                    boxShadow: '0 0 0 1px #d9d9d9 inset',
-                    border: '2px solid #592c82',
-                    borderLeft: '5px solid #592c82',
-                    fontWeight: 'bold',
-                  }}
-                >
-                  An Employee completed Security+
-                </Card>
-                <Card
-                  hoverable
-                  type="inner"
-                  style={{
-                    backgroundColor: '#fff',
-                    color: 'black',
-                    boxShadow: '0 0 0 1px #d9d9d9 inset',
-                    border: '2px solid #592c82',
-                    borderLeft: '5px solid #592c82',
-                    marginTop: 16,
-                    fontWeight: 'bold',
-                  }}
-                >
-                  Have you updated the list of trainings with the latest 2020 offerings?
-                </Card>
-              </Card>
+              <ToDoList list={thingsToDo} />
+            </Col>
+            <Col xs={12} span={18}>
+              <GoalList list={goals} showDrawer={this.showDrawer} />
             </Col>
           </Row>
 
@@ -125,42 +119,46 @@ class Dashboard extends React.Component {
             We <Icon type="heart" theme="twoTone" twoToneColor="#eb2f96" spin /> Sidney
           </p>
         </Card>
-      </PageHeaderWrapper>
-    );
-
-    /*     console.log('user fetch async', this.state);
-    return currentUser && currentUser.name && this.state.userAsync ? (
-      <PageHeaderWrapper>
-        <Card>
-          <h1>
-            {greeting}, {currentUser.name}
-          </h1>
-
-          <p
+        <Drawer title="Set a New Goal" onClose={this.onClose} visible={this.state.visible}>
+          <Form layout="vertical" hideRequiredMark>
+            <Row gutter={16}>
+              <Col span={24}>
+                <Form.Item label="Your New Goal:">
+                  {getFieldDecorator('description', {
+                    rules: [
+                      {
+                        required: true,
+                        message: 'Set a New Goal for Yourself!',
+                      },
+                    ],
+                  })(<Input.TextArea rows={4} placeholder="Set a New Goal for Yourself!" />)}
+                </Form.Item>
+              </Col>
+            </Row>
+          </Form>
+          <div
             style={{
-              textAlign: 'center',
-              marginTop: 24,
+              position: 'absolute',
+              left: 0,
+              bottom: 0,
+              width: '100%',
+              borderTop: '1px solid #e9e9e9',
+              padding: '10px 16px',
+              background: '#fff',
+              textAlign: 'right',
             }}
           >
-            We <Icon type="heart" theme="twoTone" twoToneColor="#eb2f96" spin /> {currentUser.name}
-          </p>
-        </Card>
+            <Button onClick={this.onClose} style={{ marginRight: 8 }}>
+              Cancel
+            </Button>
+            <Button onClick={this.onClose} type="primary">
+              Submit
+            </Button>
+          </div>
+        </Drawer>
       </PageHeaderWrapper>
-    ) : (
-      <Spin
-        size="small"
-        style={{
-          marginLeft: 8,
-          marginRight: 8,
-        }}
-      />
-    ); */
+    );
   }
 }
 
-//const App = Form.create()(Dashboard);
-/* export default connect(({ user }) => ({
-  currentUser: user.currentUser,
-}))(Dashboard); */
-
-export default connect(({}) => ({}))(Form.create()(Dashboard));
+export default connect(() => ({}))(Form.create()(Dashboard));

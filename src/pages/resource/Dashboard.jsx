@@ -1,34 +1,18 @@
 import React from 'react';
-import {
-  Card,
-  Typography,
-  Alert,
-  Icon,
-  Menu,
-  Spin,
-  Row,
-  Col,
-  Badge,
-  Drawer,
-  Form,
-  Button,
-  Input,
-  Select,
-  DatePicker,
-} from 'antd';
+import { Card, Typography, Icon, Row, Col, Drawer, Form, Button, Input, Divider } from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import { FormattedMessage } from 'umi-plugin-react/locale';
 import { connect } from 'dva';
+import Link from 'umi/link';
+import ToDoList from '../common-components/ToDoList';
+import GoalList from '../common-components/GoalList';
 
-var hour = new Date().getHours();
-var greeting = 'Good ' + ((hour < 12 && 'Morning') || (hour < 18 && 'Afternoon') || 'Evening');
+const { Text } = Typography;
+
+const hour = new Date().getHours();
+
+const greeting = `Good ${(hour < 12 && 'morning') || (hour < 18 && 'afternoon') || 'evening'}`;
 
 class Dashboard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { userAsync: [], loading: true };
-  }
-
   state = { visible: false };
 
   showDrawer = () => {
@@ -42,101 +26,87 @@ class Dashboard extends React.Component {
       visible: false,
     });
   };
-  /*   componentDidMount() {
-    this.getUserAsync();
-  } */
-
-  /*   async getUserAsync() {
-    const response = await fetch('api/currentuser');
-    const data = await response.json();
-    this.setState({ userAsync: data, loading: false });
-  } */
 
   render() {
-    const {
-      currentUser = {
-        avatar: '',
-        name: '',
+    const thingsToDo = [
+      {
+        title: 'Reminder',
+        content:
+          'Have you signed up for your training for your training yet yet for your training yet?',
       },
-      menu,
-    } = this.props;
+      {
+        title: '',
+        content: 'There are new job openings for your desired career track...',
+      },
+    ];
+
+    const goals = [
+      'Complete Splunk certification in 2020!',
+      'Sign up for virtual manager training.',
+      'Explore career paths in satelite networks.',
+    ];
+
     const { getFieldDecorator } = this.props.form;
+    const managementModules = [
+      {
+        path: '/program/dashboard',
+        title: 'Program Management Modules',
+      },
+      {
+        path: '/learning/dashboard',
+        title: 'Learning Management Modules',
+      },
+      {
+        path: '/resource/dashboard',
+        title: 'Resource Management Modules',
+      },
+    ];
     return (
       <PageHeaderWrapper>
         <Card>
-          <h1>{greeting}, Sidney</h1>
-
+          <Typography
+            style={{
+              fontWeight: 'initial',
+              fontSize: '30px',
+              letterSpacing: '0.1px',
+              textAlign: 'center',
+            }}
+          >
+            {greeting}, Sidney
+          </Typography>
+          <Divider
+            orientation="center"
+            style={{
+              marginTop: '30px',
+            }}
+            type="horizontal"
+          >
+            {managementModules.map(m => (
+              <Button
+                style={{
+                  marginLeft: '5px',
+                  marginRight: '5px',
+                  height: '50px',
+                }}
+              >
+                <Link to={m.path}>
+                  <Text
+                    style={{
+                      fontSize: '18px',
+                    }}
+                  >
+                    {m.title}
+                  </Text>
+                </Link>
+              </Button>
+            ))}
+          </Divider>
           <Row gutter={[8, 8]}>
             <Col xs={12} span={6}>
-              <Card title="Things to Do">
-                <Card
-                  hoverable
-                  type="inner"
-                  style={{
-                    backgroundColor: '#fff',
-                    color: 'black',
-                    boxShadow: '0 0 0 1px #d9d9d9 inset',
-                    border: '2px solid #592c82',
-                    borderLeft: '5px solid #592c82',
-                    fontWeight: 'bold',
-                  }}
-                >
-                  Employee Sharyn Ballard has selected a new primary desired career track...
-                </Card>
-                <Card
-                  hoverable
-                  type="inner"
-                  style={{
-                    backgroundColor: '#fff',
-                    color: 'black',
-                    boxShadow: '0 0 0 1px #d9d9d9 inset',
-                    border: '2px solid #592c82',
-                    borderLeft: '5px solid #592c82',
-                    marginTop: 16,
-                    fontWeight: 'bold',
-                  }}
-                >
-                  Reminder: Have you updated the latest list of open positions?
-                </Card>
-              </Card>
+              <ToDoList list={thingsToDo} />
             </Col>
             <Col xs={12} span={18}>
-              <Card title="Goals">
-                <Button type="primary" onClick={this.showDrawer} size="small">
-                  <Icon type="plus" /> Set a Goal
-                </Button>
-                <br />
-                <br />
-                <Card
-                  hoverable
-                  type="inner"
-                  style={{
-                    backgroundColor: '#fff',
-                    color: 'black',
-                    boxShadow: '0 0 0 1px #d9d9d9 inset',
-                    border: '2px solid #592c82',
-                    borderLeft: '5px solid #592c82',
-                    fontWeight: 'bold',
-                  }}
-                >
-                  Increase Employee Retention by 20% in 2020!
-                </Card>
-                <Card
-                  hoverable
-                  type="inner"
-                  style={{
-                    backgroundColor: '#fff',
-                    color: 'black',
-                    boxShadow: '0 0 0 1px #d9d9d9 inset',
-                    border: '2px solid #592c82',
-                    borderLeft: '5px solid #592c82',
-                    marginTop: 16,
-                    fontWeight: 'bold',
-                  }}
-                >
-                  Communicate more with the Program Managers!
-                </Card>
-              </Card>
+              <GoalList list={goals} showDrawer={this.showDrawer} />
             </Col>
           </Row>
 
@@ -191,4 +161,4 @@ class Dashboard extends React.Component {
   }
 }
 
-export default connect(({}) => ({}))(Form.create()(Dashboard));
+export default connect(() => ({}))(Form.create()(Dashboard));
