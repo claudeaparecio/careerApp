@@ -9,7 +9,7 @@ export default props => {
       bordered={false}
       headStyle={{
         textAlign: 'center',
-        fontSize: '22px',
+        fontSize: '30px',
         borderWidth: '0px',
       }}
       title="Things to Do"

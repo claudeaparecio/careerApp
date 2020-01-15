@@ -1,11 +1,11 @@
-import { Alert, Checkbox, Icon } from 'antd';
+import { Alert, Checkbox } from 'antd';
 import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
 import React, { Component } from 'react';
-import Link from 'umi/link';
 import { connect } from 'dva';
 import LoginComponents from './components/Login';
 import styles from './style.less';
-const { Tab, UserName, Password, Mobile, Captcha, Submit } = LoginComponents;
+
+const { UserName, Password, Submit } = LoginComponents;
 
 @connect(({ login, loading }) => ({
   userLogin: login,
@@ -13,15 +13,18 @@ const { Tab, UserName, Password, Mobile, Captcha, Submit } = LoginComponents;
 }))
 class Login extends Component {
   loginForm = undefined;
+
   state = {
     type: 'account',
     autoLogin: true,
   };
+
   changeAutoLogin = e => {
     this.setState({
       autoLogin: e.target.checked,
     });
   };
+
   handleSubmit = (err, values) => {
     const { type } = this.state;
 
@@ -33,11 +36,13 @@ class Login extends Component {
       });
     }
   };
+
   onTabChange = type => {
     this.setState({
       type,
     });
   };
+
   onGetCaptcha = () =>
     new Promise((resolve, reject) => {
       if (!this.loginForm) {
@@ -62,6 +67,7 @@ class Login extends Component {
         }
       });
     });
+
   renderMessage = content => (
     <Alert
       style={{
@@ -79,6 +85,7 @@ class Login extends Component {
     const { type, autoLogin } = this.state;
     return (
       <div className={styles.main}>
+        <div className={styles.loginTitle}>Signin to plan and automate your future</div>
         <LoginComponents
           defaultActiveKey={type}
           onTabChange={this.onTabChange}

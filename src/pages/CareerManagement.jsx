@@ -1,23 +1,11 @@
 import React from 'react';
-import {
-  Card,
-  Typography,
-  Alert,
-  Icon,
-  Table,
-  Divider,
-  Upload,
-  message,
-  Button,
-  Modal,
-} from 'antd';
+import { Card, Icon, Table, Divider, Upload, message, Button, Modal } from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import { FormattedMessage } from 'umi-plugin-react/locale';
 import Link from 'umi/link';
+import ReactTable from 'react-table';
 import { trainingData, certData } from './Utils';
 
 // Import React Table
-import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 
 class CareerManagement extends React.Component {
@@ -66,6 +54,7 @@ class CareerManagement extends React.Component {
   handleCertsCancel = () => {
     this.setState({ certificationsVisible: false });
   };
+
   render() {
     const {
       skillsLoading,
@@ -122,7 +111,7 @@ class CareerManagement extends React.Component {
       {
         title: 'Action',
         key: 'action',
-        render: (text, record) => (
+        render: () => (
           <span>
             <a>
               <Icon type="edit" />
@@ -167,7 +156,7 @@ class CareerManagement extends React.Component {
       {
         title: 'Action',
         key: 'action',
-        render: (text, record) => (
+        render: () => (
           <span>
             <a>
               <Icon type="edit" />
@@ -220,7 +209,7 @@ class CareerManagement extends React.Component {
       {
         title: 'Action',
         key: 'action',
-        render: (text, record) => (
+        render: () => (
           <span>
             <a>
               <Icon type="edit" />
@@ -281,7 +270,7 @@ class CareerManagement extends React.Component {
       {
         title: 'Action',
         key: 'action',
-        render: (text, record) => (
+        render: () => (
           <span>
             <a>
               <Icon type="edit" />
@@ -306,7 +295,7 @@ class CareerManagement extends React.Component {
             </Button>
           </Upload>
           <Divider orientation="left">
-            <h1>Sidney's Skills</h1>
+            <h1>Sidney`&apos;`s Skills</h1>
           </Divider>
           <a onClick={this.showSkillsModal}>
             <Icon type="search" />
@@ -320,7 +309,7 @@ class CareerManagement extends React.Component {
             style={{ paddingBottom: 20 }}
           />
           <Divider orientation="left">
-            <h1>Sidney's Certifications</h1>
+            <h1>Sidney`&apos;`s Certifications</h1>
           </Divider>
           <a onClick={this.showCertsModal}>
             <Icon type="search" />
@@ -334,7 +323,7 @@ class CareerManagement extends React.Component {
             style={{ paddingBottom: 20 }}
           />
           <Divider orientation="left">
-            <h1>Sidney's Desired Career Tracks</h1>
+            <h1>Sidney`&apos;`s Desired Career Tracks</h1>
           </Divider>
           <Link to="/employee/careerTrackSearch">
             <Icon type="search" />
@@ -349,7 +338,7 @@ class CareerManagement extends React.Component {
             style={{ paddingBottom: 20 }}
           />
           <Divider orientation="left">
-            <h1>Sidney's Open Positions Interested In</h1>
+            <h1>Sidney`&apos;`s Open Positions Interested In</h1>
           </Divider>
           <Link to="/employee/positionSearch">
             <Icon type="search" />

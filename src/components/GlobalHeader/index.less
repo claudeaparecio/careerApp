@@ -17,12 +17,19 @@
 }
 
 .menu {
+  margin-right: 22px;
   :global(.anticon) {
     margin-right: 8px;
   }
   :global(.ant-dropdown-menu-item) {
     min-width: 160px;
   }
+}
+
+.menuItem {
+  min-width: 200px;
+  margin: 10px;
+  font-size: 16px;
 }
 
 .trigger {
@@ -65,6 +72,13 @@
     }
   }
   .account {
+    .name {
+      padding: 10px;
+      color: black;
+      font-weight: bold;
+      font-size: 16px;
+      letter-spacing: 1px;
+    }
     .avatar {
       margin: ~'calc((@{layout-header-height} - 24px) / 2)' 0;
       margin-right: 8px;

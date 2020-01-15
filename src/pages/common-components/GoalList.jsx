@@ -8,14 +8,16 @@ export default props => {
       bordered={false}
       headStyle={{
         textAlign: 'center',
-        fontSize: '22px',
+        fontSize: '30px',
         borderWidth: '0px',
       }}
       title="Goals"
     >
-      <Button type="primary" onClick={showDrawer} size="small">
-        <Icon type="plus" /> Set a Goal
-      </Button>
+      {showDrawer && (
+        <Button type="primary" onClick={showDrawer} size="small">
+          <Icon type="plus" /> Set a Goal
+        </Button>
+      )}
       <br />
       <br />
       {list.map(goal => (

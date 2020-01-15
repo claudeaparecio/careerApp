@@ -1,17 +1,17 @@
 import React from 'react';
-import { Card, Typography, Icon, Row, Col, Drawer, Form, Button, Input, Divider } from 'antd';
+import { Card, Typography, Icon, Row, Col, Drawer, Form, Button, Input } from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
-import Link from 'umi/link';
 import ToDoList from '../common-components/ToDoList';
 import GoalList from '../common-components/GoalList';
-
-const { Text } = Typography;
+import morningIcon from '../../assets/morning-icon.png';
+import afternoonIcon from '../../assets/afternoon-icon.png';
+import eveningIcon from '../../assets/evening-icon.png';
 
 const hour = new Date().getHours();
 
 const greeting = `Good ${(hour < 12 && 'morning') || (hour < 18 && 'afternoon') || 'evening'}`;
-
+const greetingIcon = (hour < 12 && morningIcon) || (hour < 18 && afternoonIcon) || eveningIcon;
 class Dashboard extends React.Component {
   state = { visible: false };
 
@@ -47,34 +47,36 @@ class Dashboard extends React.Component {
     ];
 
     const { getFieldDecorator } = this.props.form;
-    const managementModules = [
-      {
-        path: '/program/dashboard',
-        title: 'Program Management Modules',
-      },
-      {
-        path: '/learning/dashboard',
-        title: 'Learning Management Modules',
-      },
-      {
-        path: '/resource/dashboard',
-        title: 'Resource Management Modules',
-      },
-    ];
     return (
       <PageHeaderWrapper>
         <Card>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <div style={{ width: '100px' }}>
+              <img style={{ width: '100%' }} src={greetingIcon} alt="" />
+            </div>
+          </div>
           <Typography
             style={{
-              fontWeight: 'initial',
-              fontSize: '30px',
+              fontWeight: 600,
+              fontSize: '33px',
               letterSpacing: '0.1px',
+              color: 'black',
               textAlign: 'center',
             }}
           >
             {greeting}, Sidney
           </Typography>
-          <Divider
+          <Typography style={{ textAlign: 'center' }}>
+            <a style={{ color: 'black', marginRight: '5px' }}>Have any questions? </a>
+            <a href="#">Visit Help Center</a>
+          </Typography>
+          {/* <Divider
             orientation="center"
             style={{
               marginTop: '30px',
@@ -100,7 +102,7 @@ class Dashboard extends React.Component {
                 </Link>
               </Button>
             ))}
-          </Divider>
+          </Divider> */}
           <Row gutter={[8, 8]}>
             <Col xs={12} span={6}>
               <ToDoList list={thingsToDo} />

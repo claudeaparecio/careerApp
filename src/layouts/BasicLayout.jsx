@@ -7,13 +7,12 @@ import ProLayout, { DefaultFooter } from '@ant-design/pro-layout';
 import React, { useEffect } from 'react';
 import Link from 'umi/link';
 import { connect } from 'dva';
-import { Icon } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import { isAntDesignPro } from '@/utils/utils';
 import logo from '../assets/Varada.jpg';
-
+import styles from './BasicLayout.less';
 /**
  * use Authorized check all menu item
  */
@@ -100,8 +99,11 @@ const BasicLayout = props => {
         if (menuItemProps.isUrl) {
           return defaultDom;
         }
-
-        return <Link to={menuItemProps.path}>{defaultDom}</Link>;
+        return (
+          <Link to={menuItemProps.path}>
+            <p className={styles.menuItem}>{defaultDom}</p>
+          </Link>
+        );
       }}
       breadcrumbRender={(routers = []) => [
         {

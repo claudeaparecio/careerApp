@@ -57,22 +57,22 @@ class AvatarDropdown extends React.Component {
         )}
         {menu && <Menu.Divider />}
 
-        <Menu.Item key="program">
+        <Menu.Item className={styles.menuItem} key="program">
           <Icon type="control" />
           <FormattedMessage id="menu.program" defaultMessage="program" />
         </Menu.Item>
 
-        <Menu.Item key="learning">
+        <Menu.Item className={styles.menuItem} key="learning">
           <Icon type="control" />
           <FormattedMessage id="menu.learning" defaultMessage="learning" />
         </Menu.Item>
 
-        <Menu.Item key="resource">
+        <Menu.Item className={styles.menuItem} key="resource">
           <Icon type="control" />
           <FormattedMessage id="menu.resource" defaultMessage="resource" />
         </Menu.Item>
 
-        <Menu.Item key="logout">
+        <Menu.Item className={styles.menuItem} key="logout">
           <Icon type="logout" />
           <FormattedMessage id="menu.account.logout" defaultMessage="logout" />
         </Menu.Item>
@@ -80,7 +80,7 @@ class AvatarDropdown extends React.Component {
     );
     return currentUser && currentUser.name ? (
       <HeaderDropdown overlay={menuHeaderDropdown}>
-        <span className={`${styles.action} ${styles.account}`}>
+        <span className={`${styles.action} ${styles.account} ${styles.userContainer}`}>
           <Avatar style={{ backgroundColor: '#592c82' }} icon="user" />
           <span className={styles.name}>{currentUser.name}</span>
         </span>
@@ -100,4 +100,4 @@ class AvatarDropdown extends React.Component {
 /* export default connect(({ user }) => ({
   currentUser: user.currentUser,
 }))(AvatarDropdown); */
-export default connect(({}) => ({}))(AvatarDropdown);
+export default connect(() => ({}))(AvatarDropdown);
